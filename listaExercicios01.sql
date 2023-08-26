@@ -88,3 +88,8 @@ LIMIT 1;
 SELECT produto, MIN(receita) AS menor_receita
 FROM vendas
 GROUP BY produto;
+
+-- exercício 18
+SELECT produto, MIN(receita) AS menor_receita
+FROM vendas 
+GROUP BY produto;
