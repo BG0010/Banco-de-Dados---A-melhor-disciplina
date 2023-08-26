@@ -99,3 +99,9 @@ LEFT JOIN (
     GROUP BY livro_id
 ) AS livros_vendidos ON livros.id = livros_vendidos.livro_id
 GROUP BY autores.id;
+
+-- exercício 19
+SELECT alunos.nome, COUNT(matriculas.id) AS numero_de_matriculas
+FROM alunos
+LEFT JOIN matriculas ON alunos.id = matriculas.aluno_id
+GROUP BY alunos.id;
