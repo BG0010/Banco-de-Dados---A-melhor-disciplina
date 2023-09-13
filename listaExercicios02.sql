@@ -122,3 +122,13 @@ BEGIN
         SET mensagem = 'Livro adicionado com sucesso.';
     END IF;
 END;
+
+--exercício 8
+CREATE PROCEDURE sp_AutorMaisAntigo(OUT autor_mais_antigo VARCHAR(255))
+BEGIN
+    SELECT CONCAT(Nome, ' ', Sobrenome) INTO autor_mais_antigo
+    FROM Autor
+    WHERE Data_Nascimento = (
+        SELECT MIN(Data_Nascimento) FROM Autor
+    );
+END;
