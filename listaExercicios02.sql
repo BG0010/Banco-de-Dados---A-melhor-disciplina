@@ -14,3 +14,12 @@ BEGIN
     INNER JOIN Autor ON Autor_Livro.Autor_ID = Autor.Autor_ID
     WHERE Categoria.Nome = categoria_nome;
 END;
+
+--exercício 3
+CREATE PROCEDURE sp_ContarLivrosPorCategoria(IN categoria_nome VARCHAR(100), OUT total_livros INT)
+BEGIN
+    SELECT COUNT(*) INTO total_livros
+    FROM Livro
+    INNER JOIN Categoria ON Livro.Categoria_ID = Categoria.Categoria_ID
+    WHERE Categoria.Nome = categoria_nome;
+END;
