@@ -54,7 +54,7 @@ BEGIN
     ORDER BY Livro.Ano_Publicacao;
 END;
 
-exercício 6
+--exercício 6
 CREATE PROCEDURE sp_TitulosPorCategoria(IN categoria_nome VARCHAR(100))
 BEGIN
     DECLARE done INT DEFAULT FALSE;
@@ -85,5 +85,40 @@ BEGIN
     
         -- Fechar o cursor
         CLOSE cur;
+    END IF;
+END;
+
+--exercício 7
+CREATE PROCEDURE sp_AdicionarLivro(
+    IN livro_titulo VARCHAR(255),
+    IN editora_id INT,
+    IN ano_publicacao INT,
+    IN numero_paginas INT,
+    IN categoria_id INT,
+    OUT mensagem VARCHAR(255)
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR 1062 -- Código de erro para chave duplicada (título do livro)
+    BEGIN
+        SET mensagem = 'Erro: Título do livro já existe na tabela.';
+    END;
+
+    -- Verificar se a editora e a categoria existem
+    DECLARE editora_existe INT;
+    DECLARE categoria_existe INT;
+    
+    SELECT COUNT(*) INTO editora_existe FROM Editora WHERE Editora_ID = editora_id;
+    SELECT COUNT(*) INTO categoria_existe FROM Categoria WHERE Categoria_ID = categoria_id;
+    
+    IF editora_existe = 0 THEN
+        SET mensagem = 'Erro: Editora não encontrada.';
+    ELSEIF categoria_existe = 0 THEN
+        SET mensagem = 'Erro: Categoria não encontrada.';
+    ELSE
+        -- Inserir o novo livro na tabela
+        INSERT INTO Livro (Titulo, Editora_ID, Ano_Publicacao, Numero_Paginas, Categoria_ID)
+        VALUES (livro_titulo, editora_id, ano_publicacao, numero_paginas, categoria_id);
+        
+        SET mensagem = 'Livro adicionado com sucesso.';
     END IF;
 END;
