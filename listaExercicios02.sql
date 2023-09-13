@@ -29,7 +29,7 @@ CREATE PROCEDURE sp_VerificarLivrosCategoria(IN categoria_nome VARCHAR(100), OUT
 BEGIN
     DECLARE total_livros INT;
     
-    -- Conta o número de livros na categoria especificada
+   
     SELECT COUNT(*) INTO total_livros
     FROM Livro
     INNER JOIN Categoria ON Livro.Categoria_ID = Categoria.Categoria_ID
@@ -52,4 +52,38 @@ BEGIN
     INNER JOIN Autor ON Autor_Livro.Autor_ID = Autor.Autor_ID
     WHERE Livro.Ano_Publicacao <= ano_fornecido
     ORDER BY Livro.Ano_Publicacao;
+END;
+
+exercício 6
+CREATE PROCEDURE sp_TitulosPorCategoria(IN categoria_nome VARCHAR(100))
+BEGIN
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE livro_titulo VARCHAR(255);
+    DECLARE cur CURSOR FOR
+        SELECT Livro.Titulo
+        FROM Livro
+        INNER JOIN Categoria ON Livro.Categoria_ID = Categoria.Categoria_ID
+        WHERE Categoria.Nome = categoria_nome;
+    
+    -- Ignorar se a categoria não existe
+    IF NOT EXISTS (SELECT 1 FROM Categoria WHERE Nome = categoria_nome) THEN
+        SELECT 'Categoria não encontrada.';
+    ELSE
+        -- Inicializar o cursor
+        OPEN cur;
+    
+        -- Loop para recuperar os títulos
+        read_loop: LOOP
+            FETCH cur INTO livro_titulo;
+            IF done THEN
+                LEAVE read_loop;
+            END IF;
+            
+            -- Exibir o título do livro
+            SELECT livro_titulo AS 'Título';
+        END LOOP;
+    
+        -- Fechar o cursor
+        CLOSE cur;
+    END IF;
 END;
