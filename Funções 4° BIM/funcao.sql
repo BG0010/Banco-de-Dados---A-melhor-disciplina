@@ -61,3 +61,13 @@ SELECT
     produto,
     IF(quantidade > 0, 'Em estoque', 'Fora de estoque') AS status_estoque
 FROM produtos;
+
+SELECT
+    produto,
+    CASE
+        WHEN preco < 10.0 THEN 'Barato'
+        WHEN preco >= 10.0 AND preco < 20.0 THEN 'Médio'
+        ELSE 'Caro'
+    END AS categoria_preco
+FROM produtos;
+
