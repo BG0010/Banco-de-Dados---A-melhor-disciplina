@@ -32,3 +32,14 @@ SELECT produto, ROUND(preco, 2) AS preco_arredondado FROM produtos;
 SELECT produto, ABS(quantidade) AS quantidade_absoluta FROM produtos;
 
 SELECT AVG(preco) AS media_precos FROM produtos;
+
+
+-- Função de Data
+CREATE TABLE eventos (
+    data_evento DATE
+);
+
+INSERT INTO eventos (data_evento) VALUES
+    ('2023-10-01'),
+    ('2023-10-05'),
+    ('2023-10-10');
