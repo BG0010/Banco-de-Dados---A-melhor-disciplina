@@ -50,3 +50,8 @@ SELECT
     data_evento,
     DATEDIFF(data_evento, '2023-10-01') AS dias_entre_datas
 FROM eventos;
+
+SELECT
+    data_evento,
+    DAYNAME(data_evento) AS nome_dia_semana
+FROM eventos;
