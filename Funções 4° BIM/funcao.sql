@@ -93,3 +93,14 @@ RETURNS NUMERIC AS
 BEGIN
   RETURN POWER(base, expoente);
 END;
+
+CREATE OR REPLACE FUNCTION e_palindromo(palavra VARCHAR)
+RETURNS BOOLEAN AS
+$$
+DECLARE
+    palavra_sem_espacos VARCHAR := LOWER(REPLACE(palavra, ' ', ''));
+    palavra_invertida VARCHAR := REVERSE(palavra_sem_espacos);
+BEGIN
+    RETURN palavra_sem_espacos = palavra_invertida;
+END;
+$$;
