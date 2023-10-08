@@ -26,3 +26,5 @@ INSERT INTO produtos (produto, preco, quantidade) VALUES
     ('Produto A', 10.99, 5),
     ('Produto B', 5.49, 0),
     ('Produto C', 15.99, -2);
+
+SELECT produto, ROUND(preco, 2) AS preco_arredondado FROM produtos;
