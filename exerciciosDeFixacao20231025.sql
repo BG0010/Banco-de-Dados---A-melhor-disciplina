@@ -12,3 +12,10 @@ create trigger excluir before delete on Clientes
 for each row
 insert into Auditoria (mensagem)
 values (CONCAT('O usuário deletou seu nome ', old.nome));
+
+--Após atualizar o nome de um cliente na tabela Clientes, insira uma mensagem na tabela Auditoria mostrando o nome antigo e o novo nome.
+
+create trigger atualizar after update on Clientes
+for each row
+insert into Auditoria (mensagem)
+values (concat('o usuário atualizou seu nome: ', old.nome,  new.nome));
